@@ -1,0 +1,22 @@
+version: "2.2"
+services:
+  mongodb:
+    build: ./mongo
+    image: my-mongo:v1
+
+  frontend:
+    build: ./frontend
+    image: frontend:v1
+    links:
+      - backend:backend
+    ports:
+      - 8081:80
+
+  backend:
+    build: ./backend
+    image: backend:v1
+    links:
+      - mongodb:db
+      - mongodb
+    volumes: 
+      - /desk/dockerfiles/:/db/
